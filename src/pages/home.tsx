@@ -1,12 +1,14 @@
 import React from 'react'
-import { useAccount, useConnect } from 'wagmi'
+import { useAccount, useConnect, useContractWrite} from 'wagmi'
 import {useState, useEffect} from "react"
 import { Link } from 'react-router-dom'
 
 const Home = () =>  {
 
-
-
+  
+  const [email, setEmail] = useState<string>(
+    localStorage.getItem("email") || ''
+  )
   const { connector: activeConnector, isConnected, address } = useAccount()
   const { connect, connectors, error, isLoading, pendingConnector } =
     useConnect()
@@ -14,6 +16,53 @@ const Home = () =>  {
     useEffect(() => {
 
     }, [address])
+
+    function handleEmailChange(event: React.ChangeEvent<HTMLInputElement>){
+      setEmail(event.target.value)
+    }
+  
+    const { write } = useContractWrite({
+      address: '0x394Bc62c08d396E738D964cCe900a957ef3C4c5E', // Contract Address
+      abi: [{
+        "inputs": [
+          {
+            "internalType": "address",
+            "name": "_buyer",
+            "type": "address"
+          },
+          {
+            "internalType": "string",
+            "name": "_email",
+            "type": "string"
+          }
+        ],
+        "name": "giftCard",
+        "outputs": [],
+        "stateMutability": "nonpayable",
+        "type": "function"
+      }],
+      functionName: 'giftCard',
+      args:["0x49cB5Fa951AD2ABbC4d14239BfE215754c7Df030",  email]
+    })
+
+    // const contractWrite2 = useContractWrite({
+    //   address: '0x5D0b9751d192273eADA651D0274E38e1ADAD2eF8',
+    //   abi: [{
+    //       "inputs": [
+    //         {
+    //           "internalType": "string",
+    //           "name": "_email",
+    //           "type": "string"
+    //         }
+    //       ],
+    //       "name": "withdraw",
+    //       "outputs": [],
+    //       "stateMutability": "nonpayable",
+    //       "type": "function"
+    //     }],
+    //   functionName: 'withdraw',
+    //   args: [email]
+    // })
  
   return (
     <>
@@ -22,6 +71,17 @@ const Home = () =>  {
     <>
       {isConnected && <div>{}</div>}
  
+      <div className='flex flex-row gap-3'>
+            <label className='font-semibold'>Email Address:</label>
+            <input
+              className="border-solid border-2 border-green-600 gap-3 rounded-md w-80"
+              value={email}
+              onChange={handleEmailChange}
+            />
+            </div>
+            <div className='flex flex-row gap-3'>
+            <button onClick={() => write()} className='bg-green-200 hover:bg-gray-100 text-gray-800 font-semibold py-2 px-4 border border-green-400 rounded shadow'>Confirm Email</button>
+            </div>
       {connectors.map((connector) => (
         <button
           disabled={!connector.ready}
@@ -38,9 +98,15 @@ const Home = () =>  {
  
       {error && <div>{error.message}</div>}
     </>
-    <div className='flex flex-row justify-center'>
+    <div className='flex flex-row justify-center gap-3'>
     <Link to="/onramp">
     <button className='bg-green-200 hover:bg-gray-100 text-gray-800 font-semibold py-2 px-4 border border-green-400 rounded shadow'>OnRampKit</button>
+    </Link>
+
+    <Link to="/claim">
+    <button className="bg-green-200 hover:bg-gray-100 text-gray-800 font-semibold py-2 px-4 border border-green-400 rounded shadow">
+       Claim Page
+    </button>
     </Link>
     </div>
     </div>
