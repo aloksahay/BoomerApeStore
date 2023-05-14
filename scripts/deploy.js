@@ -18,7 +18,7 @@ async function main() {
   console.log('Deploying contracts with the account: ' + deployer.address);
 
   const GameVault = await ethers.getContractFactory('GameVault');
-  const gameVault = await GameVault.deploy();
+  const gameVault = await GameVault.deploy(2);
 
   console.log("GameVault address is: ", gameVault.address)
 }

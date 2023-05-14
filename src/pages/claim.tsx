@@ -16,7 +16,7 @@ const Claim = () => {
 
 
     const { write } = useContractWrite({
-        address: '0x394Bc62c08d396E738D964cCe900a957ef3C4c5E', //Contract Address
+        address: '0x45CA79DFfAdE621719f76350238ae9d91e2f3D96', //Contract Address
         abi: [{
             "inputs": [
               {

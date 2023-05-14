@@ -37,7 +37,7 @@ const  OnRamp = () => {
             element: '#stripe-root',
             defaultOptions: {
               transaction_details: {
-                wallet_address: "0x394Bc62c08d396E738D964cCe900a957ef3C4c5E", // Contract Address
+                wallet_address: "0x45CA79DFfAdE621719f76350238ae9d91e2f3D96", // Contract Address
                 supported_destination_networks: ['ethereum', 'polygon'],
                 supported_destination_currencies: ['usdc'], // This can be replaced by matic for try 
                 lock_wallet_address: true

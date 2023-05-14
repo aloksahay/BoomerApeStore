@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: GPL-3.0
 
-pragma solidity ^0.8.10;
+pragma solidity >=0.8.2 <0.9.0;
 import "@openzeppelin/contracts/access/Ownable.sol";
 import "@chainlink/contracts/src/v0.8/AutomationCompatible.sol";
 // import "@uniswap/v3-periphery/contracts/libraries/TransferHelper.sol";
@@ -93,6 +93,7 @@ contract GameVault is AutomationCompatibleInterface, Ownable {
         return usdcToken.balanceOf(address(this));
     }
 
+
     function checkUpkeep(
         bytes calldata
     )
@@ -124,10 +125,11 @@ contract GameVault is AutomationCompatibleInterface, Ownable {
         usdcToken.transferFrom(address(this), buyerAddress, usdcBalance);
     }
 
+
 }
 
 
-// function Swap(string memory _email, uint256 _amountIn) public {
+    // function Swap(string memory _email, uint256 _amountIn) public {
     //     require(redeemed == false, "coupon already redeemed");
     //     require(bytes(_email).length > 0, "redemption key cannot be empty");
     //     require (keccak256(abi.encodePacked(_email)) == keccak256(abi.encodePacked(redemptionKey)),"key does not match");
